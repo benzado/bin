@@ -3,6 +3,8 @@
 alias ..='cd ..'
 alias bx='bundle install'
 alias jsonlint='python -m json.tool'
+alias manp='~/bin/manpdf.sh'
+alias xyzzy='echo "Nothing happens."'
 
 # Installing p5-app-ack via MacPorts doesn't create an `ack` binary...
 
