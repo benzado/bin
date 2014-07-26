@@ -17,8 +17,8 @@ To properly install this, create a symbolic link:
 
 Then ensure that ~/.bash_profile loads your .bashrc file:
 
-	# Load .bashrc if it exists
-	test -f ~/.bashrc && source ~/.bashrc
+    # Load .bashrc if it exists
+    test -f ~/.bashrc && source ~/.bashrc
 
 # TODO
 
