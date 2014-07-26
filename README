@@ -1,0 +1,27 @@
+This a collection of simple utilities I keep in ~/bin (a directory I add
+to my PATH).
+
+# .bashrc
+
+My .bashrc lives inside here (why not? it's executable).
+
+Note: ~/.bash_profile is loaded by interactive login shells; ~/.bashrc is loaded
+by interactive non-login shells. In other words, when you create a new Terminal
+window, .bash_profile is loaded; if you type `bash` and hit return, .bashrc is
+loaded.
+
+To properly install this, create a symbolic link:
+
+    $ cd $HOME
+    $ ln -s bin/.bashrc .bashrc
+
+Then ensure that ~/.bash_profile loads your .bashrc file:
+
+	# Load .bashrc if it exists
+	test -f ~/.bashrc && source ~/.bashrc
+
+# TODO
+
+- import scripts from MacBook
+- check $PATH
+- install/update /etc/motd file
