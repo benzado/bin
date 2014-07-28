@@ -1,7 +1,7 @@
 # Useful aliases.
 
 alias ..='cd ..'
-alias bx='bundle install'
+alias bx='bundle exec'
 alias jsonlint='python -m json.tool'
 alias manp='~/bin/manpdf.sh'
 alias xyzzy='echo "Nothing happens."'
@@ -32,6 +32,10 @@ shopt -s histappend
 bind '"\e[A"':history-search-backward
 bind '"\e[B"':history-search-forward
 
+# Enable color output from `ls`
+
+export CLICOLOR=1
+
 # Sets the prompt using a random color.
 
 # 0: Black        1: Red          2: Green        3: Yellow
@@ -39,5 +43,12 @@ bind '"\e[B"':history-search-forward
 
 # Hat Tip: The Bash $PS1 Generator <http://www.kirsle.net/wizards/ps1.html>
 
-PS1_COLOR=$(($RANDOM % 5 + 1))
-export PS1="\[$(tput bold)\]\[$(tput setaf $PS1_COLOR)\][\W]\\$ \[$(tput sgr0)\]"
+PS1_COLOR=$((RANDOM % 5 + 1))
+export PS1="\[$(tput bold)$(tput setaf $PS1_COLOR)\][\W]\\$ \[$(tput sgr0)\]"
+
+# Load bash completion scripts.
+# see http://git-scm.com/book/en/Git-Basics-Tips-and-Tricks
+
+for FILE in ~/etc/bash-completion.d/*; do
+    test -r $FILE && source $FILE
+done
