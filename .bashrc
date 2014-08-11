@@ -2,18 +2,15 @@
 
 alias ..='cd ..'
 alias bx='bundle exec'
+alias gs='git status'
 alias jsonlint='python -m json.tool'
 alias manp='~/bin/manpdf.sh'
 alias xyzzy='echo "Nothing happens."'
 
-# Installing p5-app-ack via MacPorts doesn't create an `ack` binary...
-
 if [ ! -f /opt/local/bin/ack ]; then
-    if [ -f /opt/local/bin/ack-5.16 ]; then
-        alias ack='ack-5.16'
-    else
-        echo ".bashrc: can't find ack or ack-5.16"
-    fi
+    # Previously, p5-app-ack installed the script as ack-X.YZ (where X.YZ was a
+    # version number). It has since been replaced with a new package.
+    echo "ack not found; consider \`sudo port install ack\` to remedy."
 fi
 
 # I want an $EDITOR that reminds me how to quit it. So sue me.
