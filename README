@@ -1,27 +1,17 @@
 This a collection of simple utilities I keep in ~/bin (a directory I add
 to my PATH).
 
-# .bashrc
+# View UNIX manual pages as beautiful PDF documents
 
-My .bashrc lives inside here (why not? it's executable).
+`manpdf.sh` is probably the best thing in here. Check it out!
 
-Note: ~/.bash_profile is loaded by interactive login shells; ~/.bashrc is loaded
-by interactive non-login shells. In other words, when you create a new Terminal
-window, .bash_profile is loaded; if you type `bash` and hit return, .bashrc is
-loaded.
+# Making sense of bash init scripts
 
-To properly install this, create a symbolic link:
+I store my bash init scripts in here. Why not?
 
-    $ cd $HOME
-    $ ln -s bin/.bashrc .bashrc
+The manual page for `bash` explains what's up (see the "INVOCATION" section),
+but the general idea is that .profile is for login shells and .bashrc is for
+interactive non-login shells.
 
-Then ensure that ~/.bash_profile loads your .bashrc file:
-
-    # Load .bashrc if it exists
-    test -f ~/.bashrc && source ~/.bashrc
-
-# TODO
-
-- import scripts from MacBook
-- check $PATH
-- install/update /etc/motd file
+In other words, if you open a new Terminal window, .profile is loaded. If you
+type `bash` and hit return, .bashrc is loaded.
