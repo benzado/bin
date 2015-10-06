@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Logs history from the tip of the specified branch back to the most recent
+# ancestor in common with the master branch.
+
+B=$1
+
+if [ -z $B ]; then
+  echo "error: must specify branch on command line"
+  exit 1
+fi
+
+ANCESTOR=$(git merge-base master $B)
+
+if [ -z $ANCESTOR ]; then
+  exit 1
+fi
+
+git log $* $ANCESTOR..$B

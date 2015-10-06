@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Deletes all branches that have already been merged into the master branch.
+
+for B in $(git branch --merged master | cut -c 3-); do
+  if [ "$B" != "master" ]; then
+    git branch -d $B
+  fi
+done
