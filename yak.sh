@@ -22,6 +22,11 @@ function yak-timestamp {
   date "+%l:%M%p %a %e-%b-%Y"
 }
 
+function yak-history-append {
+  printf "%s (pushed: %s; popped: %s)\n" "$1" "$2" "$3"  >> $(yak-history-path)
+}
+
+
 # Porcelain
 
 function yak-help {
@@ -43,41 +48,42 @@ function yak-push {
     echo "example: yak-push researching cologne for yaks"
     return 1
   fi
-  local TIMESTAMP=`yak-timestamp`
-  echo "$TIMESTAMP $*" >> `yak-stack-path`
+  printf "%s: %s\n" "$(yak-timestamp)" "$*" >> $(yak-stack-path)
   echo "yak: Remembered!"
 }
 
 function yak-list {
-  cat `yak-stack-path`
+  cat $(yak-stack-path)
 }
 
 function yak-peek {
-  local STACK=`yak-stack-path`
-  local TOP=`tail -n 1 $STACK`
+  local STACK=$(yak-stack-path)
+  local TOP=$(tail -n 1 $STACK)
   if [ -z "$TOP" ]; then
-    echo "yak: Stack is empty!"
+    echo "yak: stack is empty!"
     return 0
   fi
-  echo "$TOP (doing now)"
+  echo "yak: top is $TOP"
 }
 
 function yak-pop {
-  local STACK=`yak-stack-path`
-  local TEMP_STACK=`mktemp -t yak-stack`
-  local TOP=`tail -n 1 "$STACK"`
+  local STACK=$(yak-stack-path)
+  local TEMP_STACK=$(mktemp -t yak-stack)
+  local TOP=$(tail -n 1 "$STACK")
 
   if [ -z "$TOP" ]; then
-    echo "yak: Stack is empty!"
+    echo "yak: stack is empty!"
     return 0
   fi
 
-  local DONE="$TOP (popped `yak-timestamp`)"
+  WHAT="${TOP/*: /}"
+  PUSH_TIME="${TOP/: */}"
+  POP_TIME=$(yak-timestamp)
 
   if sed '$ d' $STACK > $TEMP_STACK; then
     mv $TEMP_STACK $STACK
-    echo "$DONE" >> `yak-history-path`
-    echo "$DONE"
+    yak-history-append "$WHAT" "$PUSH_TIME" "$POP_TIME"
+    echo "yak: popped $TOP"
     yak-peek
   else
     echo 'yak: problem :-('
@@ -86,5 +92,5 @@ function yak-pop {
 }
 
 function yak-history {
-  cat `yak-history-path`
+  cat $(yak-history-path)
 }
