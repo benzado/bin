@@ -132,5 +132,7 @@ if [ -f ~/calendar.txt ]; then
   calendar -f ~/calendar.txt
 fi
 
-source ~/bin/yak.sh
-yak-peek
+if [ -e ~/bin/yak.sh ]; then
+  source ~/bin/yak.sh
+  yak-peek
+fi
