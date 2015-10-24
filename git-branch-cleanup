@@ -1,9 +1,23 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Deletes all branches that have already been merged into the master branch.
+# Note that `read -i` option requires a newer version of bash than the one
+# supplied with Mac OS X. (Consider installing MacPorts.)
 
-for B in $(git branch --merged master | cut -c 3-); do
-  if [ "$B" != "master" ]; then
+if [ -z $1 ]; then
+  echo "Delete local branches already merged into which branch?"
+  read -e -p 'branch: ' -i master BRANCH
+else
+  BRANCH=$1
+fi
+
+if [ -z $BRANCH ]; then
+  exit 0
+fi
+
+for B in $(git branch --merged $BRANCH | cut -c 3-); do
+  if [ "$B" != "$BRANCH" ]; then
     git branch -d $B
   fi
 done
+
+echo "Restore deleted branches with: git branch <name> <commit-hash>"
