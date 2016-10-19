@@ -76,6 +76,7 @@ alias ll='ls -lhO'
 alias ls='ls -hO'
 alias manp='~/bin/manpdf.sh'
 alias shuf=gshuf
+alias optipngall='ls -1 *.png | parallel optipng -o7'
 
 # Useful functions
 
