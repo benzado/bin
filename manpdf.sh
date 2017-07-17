@@ -12,11 +12,16 @@ PDF_CACHE_ROOT=$HOME/Library/Caches/com.benzado.manpdf.sh
 PDF_CACHE_DELETE_AFTER=1w
 
 # If invoked with no arguments, prompt the user for more information.
-if [ -z $* ]; then
+if [ -z "$*" ]; then
     echo "What manual page do you want (to open in PDF format)?"
     if [ -d $PDF_CACHE_ROOT ]; then
         echo "- Cached: \c"; du -h -s $PDF_CACHE_ROOT
     fi
+    exit
+fi
+
+if [ "$*" == "--clean" ]; then
+    rm -r $PDF_CACHE_ROOT
     exit
 fi
 
@@ -35,6 +40,7 @@ else
     echo "Creating PDF for ${MANUAL_PAGE_PATH}..."
     mkdir -p `dirname $PDF_PATH`
     man -t $* | pstopdf -i -o $PDF_PATH
+    chmod 0444 $PDF_PATH # make read-only so Preview won't try to save changes
 fi
 
 open $PDF_PATH
