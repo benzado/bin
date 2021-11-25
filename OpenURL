@@ -1,0 +1,25 @@
+#!/usr/bin/ruby
+require 'can_opener';
+
+# TODO: define app.use! to exit immediately (maybe not)
+# TODO: define/import URL class, with URL.host and URL.scheme
+
+case URL
+when %r{//(www\.)?hulu\.com(/|$)} then Chrome.use
+when %r{\b(logcheck\.com)\b} then Chrome.use
+when %r{\b(logcheckapp\.com)\b} then Chrome.use
+when %r{\b(emergentprop\.com)\b} then Chrome.use
+when %r{//(|.+\.)?facebook\.com(/|$)} then Safari.use
+when %r{//(|.+\.)?twitter.com(/|$)} then Safari.use
+when %r{^feed://}
+	Safari.use
+	puts "URL: http://www.newsblur.com/?url=#{URL}"
+else
+	if Safari.running? and not Chrome.running?
+		Safari.use
+	elsif Chrome.running? and not Safari.running?
+		Chrome.use
+	else
+		[ Safari, Chrome ].each(&:use)
+	end
+end
